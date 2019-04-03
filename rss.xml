@@ -1,4 +1,270 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[鹊巢小筑]]></title><description><![CDATA[一个分享前端技术的博客]]></description><link>https://seanbruce.github.io</link><generator>RSS for Node</generator><lastBuildDate>Wed, 03 Apr 2019 01:43:09 GMT</lastBuildDate><item><title><![CDATA[JavaScript中的类型转换（上）]]></title><description><![CDATA[这是介绍 JavaScript 中类型转换的连续三篇 Blog 中的第一篇，希望对读者在这个问题的理解上有帮助，如果你需要更详尽的阐述或说明，请阅读 Kyle Simpson 的 《你不知道的 JavaScript》 。 JavaScript…]]></description><link>https://seanbruce.github.io/coerce/</link><guid isPermaLink="false">https://seanbruce.github.io/coerce/</guid><pubDate>Tue, 02 Apr 2019 01:50:15 GMT</pubDate><content:encoded>&lt;p&gt;这是介绍 JavaScript 中类型转换的连续三篇 Blog 中的第一篇，希望对读者在这个问题的理解上有帮助，如果你需要更详尽的阐述或说明，请阅读 Kyle Simpson 的&lt;a href=&quot;https://www.amazon.cn/dp/B07BW23G4B/ref=sr_1_1?__mk_zh_CN=%E4%BA%9A%E9%A9%AC%E9%80%8A%E7%BD%91%E7%AB%99&amp;#x26;keywords=%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84javascript&amp;#x26;qid=1554183377&amp;#x26;s=gateway&amp;#x26;sr=8-1&quot;&gt;《你不知道的 JavaScript》&lt;/a&gt;。&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[鹊巢小筑]]></title><description><![CDATA[一个分享前端技术的博客]]></description><link>https://seanbruce.github.io</link><generator>RSS for Node</generator><lastBuildDate>Wed, 03 Apr 2019 08:41:23 GMT</lastBuildDate><item><title><![CDATA[去除inline元素之间空白的N种方法]]></title><description><![CDATA[几个 inline 元素排列在一起的时候，它们之间会留有空白，这些空白往往不是我们想要的结果，今天我们来看看几个去掉 inline 元素留白的方法。 假设我们要写一个水平方向的菜单，每个菜单宽度一样，占满屏幕的宽度。我打算用 和数个 元素实现这个目的，html 和 CSS…]]></description><link>https://seanbruce.github.io/remove-inline-gutter/</link><guid isPermaLink="false">https://seanbruce.github.io/remove-inline-gutter/</guid><pubDate>Wed, 03 Apr 2019 07:02:07 GMT</pubDate><content:encoded>&lt;p&gt;几个 inline 元素排列在一起的时候，它们之间会留有空白，这些空白往往不是我们想要的结果，今天我们来看看几个去掉 inline 元素留白的方法。&lt;/p&gt;
+&lt;p&gt;假设我们要写一个水平方向的菜单，每个菜单宽度一样，占满屏幕的宽度。我打算用&lt;code class=&quot;language-text&quot;&gt;ul&lt;/code&gt;和数个&lt;code class=&quot;language-text&quot;&gt;li&lt;/code&gt;元素实现这个目的，html 和 CSS 的代码如下:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;html&quot;&gt;&lt;pre style=&quot;counter-reset: linenumber NaN&quot; class=&quot;language-html line-numbers&quot;&gt;&lt;code class=&quot;language-html&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;ul&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;menu&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;li&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;menu__item&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;菜单1&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;/&lt;/span&gt;li&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;li&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;menu__item&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;菜单2&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;/&lt;/span&gt;li&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;li&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;menu__item&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;菜单3&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;/&lt;/span&gt;li&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;li&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;menu__item&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;菜单4&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;/&lt;/span&gt;li&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;li&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;menu__item&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;菜单5&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;/&lt;/span&gt;li&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;/&lt;/span&gt;ul&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space: normal; width: auto; left: 0;&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;css&quot;&gt;&lt;pre style=&quot;counter-reset: linenumber NaN&quot; class=&quot;language-css line-numbers&quot;&gt;&lt;code class=&quot;language-css&quot;&gt;&lt;span class=&quot;token selector&quot;&gt;*,
+*::before,
+*::after&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 0&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;margin&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 0&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;box-sizing&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; inherit&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token selector&quot;&gt;:root&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;font-size&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 62.5%&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;box-sizing&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; border-box&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token selector&quot;&gt;.menu&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;list-style&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; none&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token selector&quot;&gt;.menu__item&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;font-size&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 2rem&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; inline-block&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 20%&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; lightcoral&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space: normal; width: auto; left: 0;&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;结果并不是我希望的目录刚好占一行，并且每个元素的宽度是百分之 25，但是每个目录中间有一点空白区域，正是因为这些空白区域，最后一个菜单因为宽度不够，自动移到了下一行。&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/1194efff0790689f6b37e716b91180ce/6f768/img-1.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 6.324110671936759%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAABCAIAAABR8BlyAAAACXBIWXMAAAsSAAALEgHS3X78AAAAO0lEQVQI12O4PWPGt2XLvi5d+nnFiteHD/84dernqVNA8vWRIz9OnoSw38DYP0+f/vf1638g+PcPSAAAyW4y8wlYli4AAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;image1&quot;
+        title=&quot;&quot;
+        src=&quot;/static/1194efff0790689f6b37e716b91180ce/b9e4f/img-1.png&quot;
+        srcset=&quot;/static/1194efff0790689f6b37e716b91180ce/cf440/img-1.png 148w,
+/static/1194efff0790689f6b37e716b91180ce/d2d38/img-1.png 295w,
+/static/1194efff0790689f6b37e716b91180ce/b9e4f/img-1.png 590w,
+/static/1194efff0790689f6b37e716b91180ce/f9b6a/img-1.png 885w,
+/static/1194efff0790689f6b37e716b91180ce/2d849/img-1.png 1180w,
+/static/1194efff0790689f6b37e716b91180ce/bbefa/img-1.png 1770w,
+/static/1194efff0790689f6b37e716b91180ce/6f768/img-1.png 2530w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    
+图 1&lt;/p&gt;
+&lt;p&gt;解决这个问题有四种方法，每一种方法都不是完美的方法，比较好的解决方法会在文章最后给出。&lt;/p&gt;
+&lt;h5&gt;移除元素间的空白&lt;/h5&gt;
+&lt;p&gt;产生空白的原因是，元素之间有换行符、空格、或是几个 tab，所以可以利用这个原理去掉空白。将上面的&lt;code class=&quot;language-text&quot;&gt;html&lt;/code&gt;代码做出下的改变:&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/c2e929ccf89156bad377b35ea4c52209/8ee24/img-2.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 37.12984054669704%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAIAAACHqfpvAAAACXBIWXMAAAsSAAALEgHS3X78AAABL0lEQVQY01WQWU7DMBRFswpo4ySe7dhJE8dThg5SF0BB4ocWBPvfBW6rCiFd+esdv3NfVkJaIcoZVZLNY7+drY/BLVEojbncOCOkBADlAOcAgQIX5V8yiNgawHFcXk5vg+ms0U1Tt62KsZ8m66c4REu55EptrGFcFAX6D+fV/nC8fP44O2jFVS10Laax281Db4dkkT5rTOeWkCzKEpfVf3jZHj7OX8HZVgutZKPkFPtlGoxzdvayaXS3saPnXDw9gxxAUFwrJJiv1tVufzxfvoNPsGx0rbVM/feLtd6nhWlza7o+DN770+t7iKOqOSUsqyCFiDjbB+8J5QgRjClClKV+QhAqUmFMOCIcU06Z7HonhEozicqSegUJwbSs0F3mEXQ7LwL395HVurxpX2d+ARvQQxe9U2hJAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;image2&quot;
+        title=&quot;&quot;
+        src=&quot;/static/c2e929ccf89156bad377b35ea4c52209/b9e4f/img-2.png&quot;
+        srcset=&quot;/static/c2e929ccf89156bad377b35ea4c52209/cf440/img-2.png 148w,
+/static/c2e929ccf89156bad377b35ea4c52209/d2d38/img-2.png 295w,
+/static/c2e929ccf89156bad377b35ea4c52209/b9e4f/img-2.png 590w,
+/static/c2e929ccf89156bad377b35ea4c52209/8ee24/img-2.png 878w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    
+或者
+
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/b2a3b11ec9b803b4cb671e1e6adeb1d5/8ee24/img-3.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 37.12984054669704%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAIAAACHqfpvAAAACXBIWXMAAAsSAAALEgHS3X78AAABD0lEQVQY022QC06EMBRFZxsOUKD/D5QWKD91AeI4CI7G/a/EN6PGMZrcNjdNzrv3dZekBGWEc2a0nPpqGnwT2mYMQmvChfFVae3h6TmEQUueZiSK8zj50g6lNEaYEmqUsKW+G10X6roPLtTA+74tXLmuL8uyOWsEp3/gBJNPuFAA913tQgMwV9p3jSr1/PC4bm/eWSlYlPyCCcCQXGhIVreQDHDXVsFzpRzA1szzYd1evSsFZ/8l43NyZfX95Mehgbauu9TuWm3N8bicTu+wvlEcpfgHThDJcmILqaUAwxhnTOSUY8aznIKBR6mM0jbHFHyCrmA4MAxjevnJbB+dBSb6vuM430fpzR5B4evOoA9Kb0MloQmtMwAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;image3&quot;
+        title=&quot;&quot;
+        src=&quot;/static/b2a3b11ec9b803b4cb671e1e6adeb1d5/b9e4f/img-3.png&quot;
+        srcset=&quot;/static/b2a3b11ec9b803b4cb671e1e6adeb1d5/cf440/img-3.png 148w,
+/static/b2a3b11ec9b803b4cb671e1e6adeb1d5/d2d38/img-3.png 295w,
+/static/b2a3b11ec9b803b4cb671e1e6adeb1d5/b9e4f/img-3.png 590w,
+/static/b2a3b11ec9b803b4cb671e1e6adeb1d5/8ee24/img-3.png 878w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    
+再或者
+
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/070cf0f055dba2a9b4608cd5067ceb4f/8ee24/img-4.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 37.12984054669704%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAIAAACHqfpvAAAACXBIWXMAAAsSAAALEgHS3X78AAABH0lEQVQY01XO6W7DIAwA4L3GchCucIYcQEgPbZP2r3+aNtn6/o8yp506TTIWyP6wX8qKIcykqK2Rh6k77r0fY9iPUhtWy8Z3jXPzeUlpJ2smhCRUlYgWJYF4QRUvEEUVU8o4q4bOHnbDOEW/i20YpLU+hf3xMM/L6XRSEmYYxjX0/+LtJ8SkNEYJa9Tne4jB9ykAFloPU9CNuVy/lvWmJG8bzYV9Yga4vGPYvGn0x5sfx7Bh3wOGi+vdeb5eLitg9x/DZJYVVEgNY6EGk1OKQ4pdHGCbYYqub9f1tizfWtbQ8JAbBokJa6zSSlWYEgIrCF5LwgTlAhP+yNq02jh8b3jIDcNBFWWMQyEvSF7gLMeQ/+L+fM1Qlld5CQ3kiX8AJA5EF3wn/XAAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;image4&quot;
+        title=&quot;&quot;
+        src=&quot;/static/070cf0f055dba2a9b4608cd5067ceb4f/b9e4f/img-4.png&quot;
+        srcset=&quot;/static/070cf0f055dba2a9b4608cd5067ceb4f/cf440/img-4.png 148w,
+/static/070cf0f055dba2a9b4608cd5067ceb4f/d2d38/img-4.png 295w,
+/static/070cf0f055dba2a9b4608cd5067ceb4f/b9e4f/img-4.png 590w,
+/static/070cf0f055dba2a9b4608cd5067ceb4f/8ee24/img-4.png 878w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/bf04d0bd9d87f3262e88d137360212d3/f8b3c/img-5.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 8.720112517580873%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAACCAIAAADXZGvcAAAACXBIWXMAAAsSAAALEgHS3X78AAAAa0lEQVQI1x2KywqAIBQF+/9fiRBJr+kt9DuCgrLHpgjcaLsOwSzmcKYqzC/zpdTcNMkYzOzcKkQUAlKcS1031vVDBEe5S4kSF6hKCOC2dmnbNAzF++z9pvVJBMFMfT9J+TAje0M4iKJS+c8+mftfF4vQHtYAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;image5&quot;
+        title=&quot;&quot;
+        src=&quot;/static/bf04d0bd9d87f3262e88d137360212d3/b9e4f/img-5.png&quot;
+        srcset=&quot;/static/bf04d0bd9d87f3262e88d137360212d3/cf440/img-5.png 148w,
+/static/bf04d0bd9d87f3262e88d137360212d3/d2d38/img-5.png 295w,
+/static/bf04d0bd9d87f3262e88d137360212d3/b9e4f/img-5.png 590w,
+/static/bf04d0bd9d87f3262e88d137360212d3/f9b6a/img-5.png 885w,
+/static/bf04d0bd9d87f3262e88d137360212d3/2d849/img-5.png 1180w,
+/static/bf04d0bd9d87f3262e88d137360212d3/f8b3c/img-5.png 1422w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;现在的菜单的样式是我想要的效果了。但我不喜欢这种奇怪的修改 html 的方式，也许是我的编辑器有自动格式化功能等等，上面的这种方法在我看来不是最好解决办法。&lt;/p&gt;
+&lt;h5&gt;使用负的外边距&lt;/h5&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;css&quot;&gt;&lt;pre style=&quot;counter-reset: linenumber NaN&quot; class=&quot;language-css line-numbers&quot;&gt;&lt;code class=&quot;language-css&quot;&gt;&lt;span class=&quot;token selector&quot;&gt;.menu__item&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;margin-right&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; -2.6px&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space: normal; width: auto; left: 0;&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;在我的例子中，使用-2.6px 刚好可以抵消 inline 元素的空白，在实际使用中这个数值需要根据父元素上的字体大小调整。这个方法在 IE6、7 上有 Bug，如果你不需要考虑这两个浏览器的表现的话，用负外边距是一个很好的方法。&lt;/p&gt;
+&lt;h5&gt;忽略元素闭合标签&lt;/h5&gt;
+&lt;p&gt;使用 HTML5 的时候，你还可以忽略元素闭合标签，也能达到消除空白的目的。&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/997ba970bb72db6e9032149e6152f76b/9fa53/img-6.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 44.28969359331476%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAIAAAC9o5sfAAAACXBIWXMAAAsSAAALEgHS3X78AAABeklEQVQoz1WR2W7bMBBF/RFZbO2iKJqSuIu0RNNxHpzabhYgr03jBP3/n+ioLgIHGGAIggfncmaWZlWWV7yjGGOtOtczJWUrpeg1bVuEqigpoiiHmi+yq+vF7TxJ0vJcsyzHaYYoJZw1Srb3GxN8b6wx3kmrCV3mJSZNW5GlVHr3cOztECfFF1xBi9NScFpjbA3fBrUeHdd6dTcwrUjTuDBIq7wf394/fux/RnF+CaM0A7ghhKys8INYOcONkc60gpO2gQitZOsQTqc/h+PTpRlDA1gCXAPM74IK3om+d2HVSY4JNVMQ4Uf/+/0T4EszwAhOgtElIYMTADurILAZLdOSsk4PtlPc+/Wvt9N+/xh/h8GMJjOpIXbwarvx2ln7z1wRqkfLjdhsAphfXl5LVJ+Tz/ICpykqigmuca1kB3IDwo6JXjWc1bRhRk1+bQ7H593DAVXL/zA4sxzBtHrVIYTnUbGIoXL4GOx2epSU0xkuo+zmNoY9fw3sL7/JWnx8dy0GAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;image6&quot;
+        title=&quot;&quot;
+        src=&quot;/static/997ba970bb72db6e9032149e6152f76b/b9e4f/img-6.png&quot;
+        srcset=&quot;/static/997ba970bb72db6e9032149e6152f76b/cf440/img-6.png 148w,
+/static/997ba970bb72db6e9032149e6152f76b/d2d38/img-6.png 295w,
+/static/997ba970bb72db6e9032149e6152f76b/b9e4f/img-6.png 590w,
+/static/997ba970bb72db6e9032149e6152f76b/9fa53/img-6.png 718w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;当然这样写和第一种方法一样怪异，故意省略闭合标签？不推荐这种方法。&lt;/p&gt;
+&lt;h5&gt;设父元素的字体大小为 0&lt;/h5&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;css&quot;&gt;&lt;pre style=&quot;counter-reset: linenumber NaN&quot; class=&quot;language-css line-numbers&quot;&gt;&lt;code class=&quot;language-css&quot;&gt;&lt;span class=&quot;token selector&quot;&gt;.menu&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;font-size&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 0&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token selector&quot;&gt;.menu__item&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;font-size&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 2rem&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space: normal; width: auto; left: 0;&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这种方法优点是，不用做额外的 css 数值计算，也不用写奇怪的 html 代码。缺点是如果子元素上的字体是用&lt;code class=&quot;language-text&quot;&gt;em&lt;/code&gt;，从而依赖于父元素的字体大小，用这种方法元素上的字体大小就会被设为零。解决的办法是用&lt;code class=&quot;language-text&quot;&gt;rem&lt;/code&gt;，或是其它不依赖父元素字体尺寸的单位。&lt;/p&gt;
+&lt;p&gt;最后总结，其实在碰到需要消除空白的这种情况，首先要考虑是不是真的需要使用&lt;code class=&quot;language-text&quot;&gt;inline&lt;/code&gt;或&lt;code class=&quot;language-text&quot;&gt;inline-block&lt;/code&gt;。大多数情况下，使用&lt;strong&gt;float&lt;/strong&gt;和&lt;strong&gt;flexbox&lt;/strong&gt;是更合适的选择。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[JavaScript中的类型转换（上）]]></title><description><![CDATA[这是介绍 JavaScript 中类型转换的连续三篇 Blog 中的第一篇，希望对读者在这个问题的理解上有帮助，如果你需要更详尽的阐述或说明，请阅读 Kyle Simpson 的 《你不知道的 JavaScript》 。 JavaScript…]]></description><link>https://seanbruce.github.io/coerce/</link><guid isPermaLink="false">https://seanbruce.github.io/coerce/</guid><pubDate>Tue, 02 Apr 2019 01:50:15 GMT</pubDate><content:encoded>&lt;p&gt;这是介绍 JavaScript 中类型转换的连续三篇 Blog 中的第一篇，希望对读者在这个问题的理解上有帮助，如果你需要更详尽的阐述或说明，请阅读 Kyle Simpson 的&lt;a href=&quot;https://www.amazon.cn/dp/B07BW23G4B/ref=sr_1_1?__mk_zh_CN=%E4%BA%9A%E9%A9%AC%E9%80%8A%E7%BD%91%E7%AB%99&amp;#x26;keywords=%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84javascript&amp;#x26;qid=1554183377&amp;#x26;s=gateway&amp;#x26;sr=8-1&quot;&gt;《你不知道的 JavaScript》&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;JavaScript 中的类型转换分为两种类型，一种是显性的类型转换(type casting / explicit coercion)，另外一种是隐性的类型转换(coercion / implicit coercion)。在这两种类型转换中，显性转换比较好识别和理解，比如 &lt;code class=&quot;language-text&quot;&gt;String(32)&lt;/code&gt;，&lt;code class=&quot;language-text&quot;&gt;Boolean(0)&lt;/code&gt;，在看到这样的代码的时候，开发者可以很清晰直观的辨别出来类型转换的操作。相比之下隐性的转换就晦涩很多。显式和隐式是相对的概念，对一个 JavaScript 专家，甚至是 JS 标准的制定者，可能所有的隐性转换在他们看来都是显式的转换，因为他们掌握了所有的 JavaScript 细节，在他们看来一切都是清晰明了的。但是我们大多数人都不是专家或者标准制定者，这个文章的目标读者是对 JavaScript 有良好理解的普通程序员。还有一点要明确的是，大多数情况下，程序员写的代码都会有其它人来阅读或修改，即使你能理解所有不同的类型转换，想想你们团队中的新成员，想想将来维护你的代码的人，有可能他们很难理解你代码中出现的隐性类型转换，这一点必须要考虑到。&lt;/p&gt;
 &lt;h5&gt;值的抽象操作&lt;/h5&gt;
 &lt;p&gt;JavaScript 中类型转换的结果只可能是&lt;code class=&quot;language-text&quot;&gt;String&lt;/code&gt;、&lt;code class=&quot;language-text&quot;&gt;Number&lt;/code&gt;、&lt;code class=&quot;language-text&quot;&gt;Boolean&lt;/code&gt;三个类型中的一种。不同的类型如何转换为这三种类型的值，ES5 标准定义了几种&lt;strong&gt;抽象操作&lt;/strong&gt; &lt;code class=&quot;language-text&quot;&gt;ToString&lt;/code&gt;、&lt;code class=&quot;language-text&quot;&gt;ToNumber&lt;/code&gt;，&lt;code class=&quot;language-text&quot;&gt;ToBoolean&lt;/code&gt; 和 &lt;code class=&quot;language-text&quot;&gt;ToPrimitive&lt;/code&gt;。抽象操作是 ES5 标准中“仅内部操作”的另一种说法。任何非 String 类型的值转换为 String 时，转换的过程由&lt;code class=&quot;language-text&quot;&gt;ToString&lt;/code&gt; 抽象操作来处理。同样的原理作用于&lt;code class=&quot;language-text&quot;&gt;ToNumber&lt;/code&gt;和&lt;code class=&quot;language-text&quot;&gt;ToBoolean&lt;/code&gt;。&lt;/p&gt;
