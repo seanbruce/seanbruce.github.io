@@ -1,1 +1,0 @@
-{"errors":[{"message":"Variable \"$prePage\" is never used in operation \"blogListQuery\".","locations":[{"line":4,"column":3}]},{"message":"Variable \"$nextPage\" is never used in operation \"blogListQuery\".","locations":[{"line":5,"column":3}]}],"pageContext":{"limit":1,"skip":0,"prePage":"start","nextPage":"/2"}}
